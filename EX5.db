@@ -1,0 +1,23 @@
+SELECT p.pedido_id, p.cliente_id, c.nome AS nome_cliente, c.cidade, c.idade, p.data_pedido, p.valor
+FROM pedidos p
+INNER JOIN clientes c ON p.cliente_id = c.cliente_id;
+
+SELECT c.cliente_id, c.nome AS nome_cliente, c.cidade, c.idade, 
+       p.pedido_id, p.data_pedido, p.valor
+FROM clientes c
+LEFT JOIN pedidos p ON c.cliente_id = p.cliente_id
+ORDER BY c.cliente_id, p.pedido_id;
+
+SELECT p.produto_id, p.nome_produto, p.preco,
+       ip.item_id, ip.pedido_id, ip.quantidade
+FROM produtos p
+RIGHT JOIN itens_pedidos ip ON p.produto_id = ip.produto_id
+ORDER BY p.produto_id, ip.item_id;
+
+SELECT cliente_id, nome, cidade
+FROM clientes
+WHERE cidade = 'São Paulo'
+UNION
+SELECT cliente_id, nome, cidade
+FROM clientes
+WHERE cidade = 'Rio de Janeiro';
