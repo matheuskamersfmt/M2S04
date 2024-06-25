@@ -1,0 +1,15 @@
+CREATE TABLE categorias (
+	categoria_id serial PRIMARY KEY,
+	nome_categoria varchar(50)
+)
+
+ALTER TABLE produtos ADD COLUMN categoria_id INTEGER 
+
+ALTER TABLE categorias
+ADD COLUMN produto_id INT;
+
+ALTER TABLE categorias
+ADD CONSTRAINT fk_produto
+FOREIGN KEY (produto_id) REFERENCES produtos(produto_id);
+
+DROP TABLE categorias;
