@@ -1,0 +1,38 @@
+SELECT EXTRACT(MONTH FROM data_pedido) AS mes, 
+       EXTRACT(YEAR FROM data_pedido) AS ano, 
+       SUM(ip.quantidade) AS total_itens_pedidos
+FROM pedidos p
+JOIN itens_pedidos ip ON p.pedido_id = ip.pedido_id
+GROUP BY EXTRACT(YEAR FROM data_pedido), EXTRACT(MONTH FROM data_pedido)
+ORDER BY ano, mes;
+
+SELECT c.cliente_id, c.nome, c.cidade, c.idade
+FROM clientes c
+LEFT JOIN pedidos p ON c.cliente_id = p.cliente_id
+WHERE p.pedido_id IS NULL;
+
+SELECT pedido_id, cliente_id, data_pedido, valor
+FROM pedidos
+ORDER BY valor DESC
+LIMIT 1;
+
+SELECT p.produto_id, p.nome_produto, SUM(ip.quantidade) AS total_itens_pedidos
+FROM produtos p
+LEFT JOIN itens_pedidos ip ON p.produto_id = ip.produto_id
+GROUP BY p.produto_id, p.nome_produto
+ORDER BY total_itens_pedidos DESC;
+
+SELECT p.cliente_id, c.nome, SUM(p.valor) AS soma_valores_pedidos
+FROM pedidos p
+JOIN clientes c ON p.cliente_id = c.cliente_id
+GROUP BY p.cliente_id, c.nome
+HAVING COUNT(p.pedido_id) > 1;
+
+Encontre o preço médio dos produtos em cada categoria.
+R: Não existe a tabela categoria com dados, excluimos ela anteriormente e mesmo assim ela não possuia dados;
+
+SELECT c.cliente_id, c.nome, c.cidade, c.idade, p.pedido_id, p.valor
+FROM pedidos p
+JOIN clientes c ON p.cliente_id = c.cliente_id
+ORDER BY p.valor DESC
+LIMIT 1;
