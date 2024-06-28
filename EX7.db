@@ -1,0 +1,13 @@
+SELECT AVG(c.idade) AS media_idade
+FROM clientes c
+JOIN pedidos p ON c.cliente_id = p.cliente_id
+WHERE p.valor > 300.00;
+
+SELECT p.produto_id, p.nome_produto
+FROM produtos p
+WHERE p.produto_id IN (
+    SELECT ip.produto_id
+    FROM itens_pedidos ip
+    GROUP BY ip.produto_id
+    HAVING COUNT(ip.produto_id) > 1
+);
